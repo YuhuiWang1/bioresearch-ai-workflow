@@ -11,7 +11,7 @@ AI-assisted workflow for bioinformatic research, e.g. gene family analysis, RNA-
 
 ---
 
-##How to use  / 如何使用
+## How to use  / 如何使用
 
 1. Enter the `workflow/` directory and select the corresponding `.md` file based on the analysis stage. 进入 `workflow/` 目录，按分析阶段选择对应的 `.md` 文件
 2. Copy and paste the prompt text completely into the large language models such as Claude, ChatGPT, or DeepSeek. 将提示词完整复制粘贴到 Claude / ChatGPT / DeepSeek 等大语言模型
@@ -20,7 +20,7 @@ AI-assisted workflow for bioinformatic research, e.g. gene family analysis, RNA-
 
 ---
 
-##Structure /目录结构 
+## Structure /目录结构 
 
 ```
 .
