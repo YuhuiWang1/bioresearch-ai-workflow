@@ -11,8 +11,7 @@ description: >
 
 # 基因家族分析 Gene Family Analysis
 
-本技能指导你(AI 助手)带领用户完成一个基因家族从“鉴定成员”到“讲出生物学故事”的
-完整分析。
+本技能指导你(AI 助手)带领用户完成一个基因家族从“鉴定成员”到“讲出生物学故事”的完整分析。
 
 ## 通用原则 / Guiding principles
 
@@ -60,6 +59,21 @@ regardless of output language.
 - **存在多个组装版本时**,按以下优先级取最新、最完整的:
   T2T(端粒到端粒)完成图 > PacBio 等长读长(long-read)组装 > 最新发布版本。
 - 选定后,**记录数据库名、组装版本号、注释版本号、访问日期**,写进 Methods 备查。
+
+**从 NCBI 取基因组时的实战核对(踩坑提醒):**
+
+- **认准 Assembly/Genome(GCA/GCF)记录,而不是 SRA**:有的提交者会把组装好的序列当作
+  "reads"传进 SRA(SRX/SRR 名字里甚至写着 "genome assembly")。这种 SRA 记录不带标准
+  注释,不能直接做家族鉴定——应改用对应的 **GCA 组装记录**(SRA 页 → BioProject →
+  Assembly 即可找到)。
+- **务必核实注释文件是否真的存在,别只信论文的 "Data availability"**:GenBank 的 GCA
+  常只有基因组、无注释。下载前在该组装的 FTP 目录里确认是否有 `_genomic.gff.gz` 和
+  `_protein.faa.gz`/`_cds_from_genomic.fna.gz`;只有 `_genomic.fna.gz` 则需另找注释。
+  (论文宣称"注释见 Figshare/补充"却实际缺失的情况确有发生,必须亲自核对。)
+  若该组装无注释,可改用同物种有 RefSeq 注释的版本(GCF_…),或自行重注释。
+- **用物种浏览看全部可用组装**:`https://www.ncbi.nlm.nih.gov/datasets/genome/?taxon=<TAXID>`
+  列出该物种所有组装,据此挑注释完整、版本最优者。**若同物种有多套种质组装**,则更适合
+  做泛基因家族分析(改用 pan-gene-family-analysis 技能)。
 
 ---
 
@@ -131,10 +145,14 @@ regardless of output language.
 
 **目的**:预测蛋白行使功能的细胞区室,为功能假设提供线索。
 
-**标准做法**:WoLF PSORT / Plant-mPLoc / Cell-PLoc / DeepLoc 等任选并交叉验证。
+**标准做法**:用综合预测器(TargetP / WoLF PSORT / Plant-mPLoc / DeepLoc 等)交叉验证;
+针对特定细胞器的问题改用专一工具(如 ChloroP、MitoProt、PredPlantPTS1);已知基因用
+UniProtKB / SUBA4 交叉验证。
 
-**工具取舍与结果对照**:不同预测器的可信度、适用场景,以及它们对同一细胞区室的不同命名对照,见 `references/subcellular-localization.md`。先查阅该文件再做判断;
-该文件未覆盖的情形,可向用户说明需要进一步核实。
+**完整工具清单(17+)、选用建议与命名对照见 `references/subcellular-localization.md`**
+(已按用途分类整理:综合 / 细胞器专一 / 细菌专用 / 数据库)。先查阅该文件再做判断。
+
+>该文件未覆盖的情形,可向用户说明需要进一步核实。
 
 
 ### 5. 系统发育分析 Phylogenetic analysis
